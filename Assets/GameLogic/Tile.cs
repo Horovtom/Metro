@@ -7,7 +7,7 @@ public enum Direction { N = 0, E = 1, S = 2, W = 3 }
 public class Tile {
     public int X { get; }
     public int Y { get; }
-    private readonly string configFile;
+    private readonly TileRepository repository;
     private int type;
     private Dictionary<Direction, Direction> connections;
     private Action<Tile> callbacksTypeChanged;
@@ -41,10 +41,10 @@ public class Tile {
         }
     }
 
-    public Tile(int x, int y, string configFile) {
+    public Tile(int x, int y, TileRepository repository) {
         X = x;
         Y = y;
-        this.configFile = configFile;
+        this.repository = repository;
 
         Type = 1;
     }

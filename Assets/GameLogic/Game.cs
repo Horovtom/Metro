@@ -35,9 +35,10 @@ public class Game {
     }
 
     void InitializeTiles() {
+        TileRepository tileRepository = new TileRepository(configFile);
         for (int x = 0; x < Width; x++) {
             for (int y = 0; y < Height; y++) {
-                tiles[x, y] = new Tile(x, y, configFile);
+                tiles[x, y] = new Tile(x, y, tileRepository);
             }
         }
     }
