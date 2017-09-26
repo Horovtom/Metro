@@ -35,19 +35,26 @@ public class Game {
 
     public int Height { get; }
 
-    private Tile[,] tiles;
-    private ScheduleRepository repository;
+    //Move this to Stack
+    private Tile[,] board;
+    private ScheduleRepository scheduleRepository;
+
+    private TilesStack stack;
+
+    public Tile TileInHand { get; protected set; }
 
     public Game(string tilesConfig, string scheduleConfig) {
         Width = 8;
         Height = 8;
 
-        tiles = new Tile[Width, Height];
-        InitializeTiles(tilesConfig);
+        board = new Tile[Width, Height];
+        TileRepository tileRepository = new TileRepository(tilesConfig);
+        stack = new TilesStack(tileRepository);
         LoadScheduleConfig(scheduleConfig);
 
-        //TODO: Implement
-        //throw new System.NotImplementedException();
+        SetUpStations();
+
+        //TODO: COMPLETE GAME PREPARATION
     }
 
     public Tile GetTileAt(int x, int y) {
@@ -55,27 +62,26 @@ public class Game {
             Debug.LogError("GetTileAt - out of bounds: " + x + ", " + y);
             return null;
         }
-        return tiles[x, y];
+        return board[x, y];
     }
 
     private void LoadScheduleConfig(string scheduleConfig) {
-        repository = new ScheduleRepository(scheduleConfig);
+        scheduleRepository = new ScheduleRepository(scheduleConfig);
     }
 
+    /// <summary>
+    /// Determines, whether a specified position is regular spot for a tile on the game board
+    /// </summary>
     public bool IsFieldWithTile(int x, int y) {
         return x >= 0 && x < Width && y >= 0 && y < Height && ((x != 3 && x != 4) || (y != 3 && y != 4));
     }
 
-    void InitializeTiles(string tilesConfig) {
-        TileRepository tileRepository = new TileRepository(tilesConfig);
-        for (int x = 0; x < Width; x++) {
-            for (int y = 0; y < Height; y++) {
-                tiles[x, y] = new Tile(x, y, tileRepository);
-            }
-        }
+    public void ClickedOnTile(Vector2 pos) {
+        
+        Debug.Log("Tile had coords: " + pos.x + " " + pos.y);
     }
 
-    private void GetScheduleOfPlayer(PlayerColor color) {
-        
+    void SetUpStations() {
+        //TODO: IMPLEMENT
     }
 }

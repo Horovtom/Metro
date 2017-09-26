@@ -55,15 +55,14 @@ public class TileRepository {
     }
 
     /// <summary>
-    /// Gets connections on specified tile, format of dictionary is [From] = Where
+    /// Gets Tile with ready connections
     /// </summary>
-    public Dictionary<Direction, Direction> GetTile(int index) {
-        if (index < 0 || index >= tiles.Count) {
-            Debug.LogError("Want to get tile with index: " + index + ", which is out of range!");
+    public Tile GetTile(int type) {
+        if (type < 0 || type >= tiles.Count) {
+            Debug.LogError("Want to get tile with index: " + type + ", which is out of range!");
             throw new ArgumentException();
         }
-
-        return tiles[index];
+        return new Tile(type, tiles[type]);
     }
 }
 

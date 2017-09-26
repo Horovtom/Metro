@@ -4,11 +4,19 @@ using System;
 using UnityEngine;
 
 public class TileController : MonoBehaviour {
-    
+    public static TileController Instance { get; private set; }
+
     private Dictionary<Tile, GameObject> tileGOMap;
     private Dictionary<GameObject,Tile> GOTileMap;
     public GameObject tilePrefab;
     private Dictionary<string, Sprite> tileSprites;
+
+    private GameObject[,] boardGO;
+    private Dictionary<GameObject,Vector2> boardCoordsMap;
+
+    public TileController() {
+        Instance = this;
+    }
     
     // Use this for initialization
     void Start() {
@@ -16,25 +24,42 @@ public class TileController : MonoBehaviour {
         GOTileMap = new Dictionary<GameObject,Tile>();
         Game game = GameController.Instance.Game;
         LoadSprites();
+        boardGO = new GameObject[game.Width, game.Height];
+        boardCoordsMap = new Dictionary<GameObject, Vector2>();
 
-        //Fill the TileGOMap:
         for (int x = 0; x < game.Width; x++) {
             for (int y = 0; y < game.Height; y++) {
                 if (!game.IsFieldWithTile(x, y))
                     continue;
 
-                Tile tile = game.GetTileAt(x, y);
                 GameObject tileGO = (GameObject)GameObject.Instantiate(tilePrefab, this.transform.position + (new Vector3(x, y, 0)), Quaternion.identity);
                 tileGO.name = "Tile [" + x + ", " + y + "]";
                 tileGO.transform.SetParent(this.transform, true);
                 tileGO.GetComponent<SpriteRenderer>().sortingLayerName = "Cards";
-                GOTileMap.Add(tileGO, tile);
-                tileGOMap.Add(tile, tileGO);
-                Debug.Log("I am here!");
-
-                tile.RegisterTypeChangedCallback(TileSpriteChanged);
+                boardGO[x, y] = tileGO;
+                boardCoordsMap[tileGO] = new Vector2(x, y);
             }
         }
+
+
+//        //Fill the TileGOMap:
+//        for (int x = 0; x < game.Width; x++) {
+//            for (int y = 0; y < game.Height; y++) {
+//                if (!game.IsFieldWithTile(x, y))
+//                    continue;
+//
+//                Tile tile = game.GetTileAt(x, y);
+//                GameObject tileGO = (GameObject)GameObject.Instantiate(tilePrefab, this.transform.position + (new Vector3(x, y, 0)), Quaternion.identity);
+//                tileGO.name = "Tile [" + x + ", " + y + "]";
+//                tileGO.transform.SetParent(this.transform, true);
+//                tileGO.GetComponent<SpriteRenderer>().sortingLayerName = "Cards";
+//                GOTileMap.Add(tileGO, tile);
+//                tileGOMap.Add(tile, tileGO);
+//                //Debug.Log("I am here!");
+//
+//                tile.RegisterTypeChangedCallback(TileSpriteChanged);
+//            }
+//        }
     }
 
     void LoadSprites() {
@@ -59,18 +84,32 @@ public class TileController : MonoBehaviour {
 		
     }
 
-    void TileSpriteChanged(Tile tile) {
-        //Debug.Log("I am here!");
-        GameObject tileGO = tileGOMap[tile];
+    //    void TileSpriteChanged(Tile tile) {
+    //        //Debug.Log("I am here!");
+    //        GameObject tileGO = tileGOMap[tile];
+    //
+    //
+    //        string spriteName = "tiles" + tile.Type;
+    //
+    //        if (!tileSprites.ContainsKey(spriteName)) {
+    //            Debug.LogError("Sprite: " + spriteName + " not present in dictionary! Sprite missing!");
+    //            return;
+    //        }
+    //        Sprite s = tileSprites[spriteName];
+    //        tileGO.GetComponent<SpriteRenderer>().sprite = s;
+    //    }
 
-
-        string spriteName = "tiles" + tile.Type;
-
+    void DisplayTile(int x, int y, int Type) {
+        string spriteName = "tiles" + Type;
         if (!tileSprites.ContainsKey(spriteName)) {
             Debug.LogError("Sprite: " + spriteName + " not present in dictionary! Sprite missing!");
             return;
         }
         Sprite s = tileSprites[spriteName];
-        tileGO.GetComponent<SpriteRenderer>().sprite = s;
+        boardGO[x, y].GetComponent<SpriteRenderer>().sprite = s;
+    }
+
+    public Vector2 GetCoordsOfTile(GameObject gameObject) {
+        return boardCoordsMap[gameObject];
     }
 }

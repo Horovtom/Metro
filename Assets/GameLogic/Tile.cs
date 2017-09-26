@@ -12,54 +12,24 @@ public enum Direction {
 }
 
 public class Tile {
-    public int X { get; }
+    private Vector2 Position
+    {
+        get ;
+        set ;
+    }
 
-    public int Y { get; }
+    public int Type { get; }
 
-    private readonly TileRepository repository;
-    private int type;
     private Dictionary<Direction, Direction> connections;
-    private Action<Tile> callbacksTypeChanged;
 
-    public int Type
-    { 
-        get { return type; }
-        set
-        { 
-            if (value == -1)
-                Debug.Log("Clearing type of tile: [" + X + ", " + Y + "]");
-            else
-                Debug.Log("Tile - Changing type of [" + X + ", " + Y + "] to: " + value); 
-            
-            SetType(value);
-        }
+    public bool Placed { get { return Position.x >= 0 && Position.y >= 0; } }
+
+    public Tile(int type, Dictionary<Direction, Direction> connections) {
+        this.Type = type;
+        this.connections = connections;
     }
 
-    private void SetType(int value) {
-        if (value == -1)
-            connections = null;
-        else {
-            //TODO:IMPLEMENT
-            //throw new System.NotImplementedException();
-        }
-
-        type = value;
-
-        if (callbacksTypeChanged != null) {
-            callbacksTypeChanged(this);
-        }
-    }
-
-    public Tile(int x, int y, TileRepository repository) {
-        X = x;
-        Y = y;
-        this.repository = repository;
-
-        Type = 1;
-    }
-
-    public void RegisterTypeChangedCallback(Action<Tile> callback) {
-        callbacksTypeChanged += callback;
-        callback(this);
+    public Direction GoThrough(Direction d) {
+        return connections[d];
     }
 }
