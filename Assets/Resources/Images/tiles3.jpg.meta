@@ -1,12 +1,12 @@
 fileFormatVersion: 2
 guid: 4109417f7c2d49344875d1af794d1d57
-timeCreated: 1506281708
+timeCreated: 1506441385
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: tiles3_0
-    21300002: tiles3_1
-    21300004: tiles3_2
+    21300000: tiles20
+    21300002: tiles21
+    21300004: tiles22
     21300006: tiles3_3
     21300008: tiles3_4
     21300010: tiles3_5
@@ -14,7 +14,7 @@ TextureImporter:
     21300014: tiles3_7
     21300016: tiles3_8
     21300018: tiles3_9
-    21300020: tiles3_10
+    21300020: tiles23
     21300022: tiles3_11
   serializedVersion: 4
   mipmaps:
@@ -95,7 +95,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tiles3_0
+      name: tiles20
       rect:
         serializedVersion: 2
         x: 21
@@ -103,13 +103,13 @@ TextureImporter:
         width: 246
         height: 246
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: tiles3_1
+      name: tiles21
       rect:
         serializedVersion: 2
         x: 267
@@ -117,13 +117,13 @@ TextureImporter:
         width: 246
         height: 246
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: tiles3_2
+      name: tiles22
       rect:
         serializedVersion: 2
         x: 513
@@ -131,111 +131,13 @@ TextureImporter:
         width: 246
         height: 246
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: tiles3_3
-      rect:
-        serializedVersion: 2
-        x: 759
-        y: 512
-        width: 246
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tiles3_4
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 266
-        width: 246
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tiles3_5
-      rect:
-        serializedVersion: 2
-        x: 267
-        y: 266
-        width: 246
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tiles3_6
-      rect:
-        serializedVersion: 2
-        x: 513
-        y: 266
-        width: 246
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tiles3_7
-      rect:
-        serializedVersion: 2
-        x: 759
-        y: 266
-        width: 246
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tiles3_8
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 20
-        width: 246
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tiles3_9
-      rect:
-        serializedVersion: 2
-        x: 267
-        y: 20
-        width: 246
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tiles3_10
+      name: tiles23
       rect:
         serializedVersion: 2
         x: 513
@@ -243,21 +145,7 @@ TextureImporter:
         width: 246
         height: 246
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: tiles3_11
-      rect:
-        serializedVersion: 2
-        x: 759
-        y: 20
-        width: 246
-        height: 246
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

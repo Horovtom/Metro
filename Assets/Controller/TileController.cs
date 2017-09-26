@@ -24,7 +24,7 @@ public class TileController : MonoBehaviour {
                     continue;
 
                 Tile tile = game.GetTileAt(x, y);
-                GameObject tileGO = (GameObject) GameObject.Instantiate(tilePrefab, this.transform.position + (new Vector3(x, y, 0)), Quaternion.identity);
+                GameObject tileGO = (GameObject)GameObject.Instantiate(tilePrefab, this.transform.position + (new Vector3(x, y, 0)), Quaternion.identity);
                 tileGO.name = "Tile [" + x + ", " + y + "]";
                 tileGO.transform.SetParent(this.transform, true);
                 tileGO.GetComponent<SpriteRenderer>().sortingLayerName = "Cards";
@@ -62,10 +62,9 @@ public class TileController : MonoBehaviour {
     void TileSpriteChanged(Tile tile) {
         //Debug.Log("I am here!");
         GameObject tileGO = tileGOMap[tile];
-        int spriteGroup = (int) Math.Floor(tile.Type / 12.0) + 1;
-        int spriteNumber = tile.Type % 12;
 
-        string spriteName = "tiles" + spriteGroup + "_" + spriteNumber;
+
+        string spriteName = "tiles" + tile.Type;
 
         if (!tileSprites.ContainsKey(spriteName)) {
             Debug.LogError("Sprite: " + spriteName + " not present in dictionary! Sprite missing!");
