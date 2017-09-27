@@ -10,8 +10,8 @@ public class BoardState {
         this.game = game;
     }
 
-    public int GetTileAt(int x, int y) {
-        return game.GetTileAt(x, y);
+    public int GetTileTypeAt(int x, int y) {
+        return game.GetTileAt(x, y).Type;
     }
 
     public PlayerColor GetPlayerAtStation(int stationNumber) {

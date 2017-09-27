@@ -42,15 +42,15 @@ public class Players {
     public void IncrementScore(int player, int increment) {
         if (player < 0 || player >= players.Length) {
             Debug.Log("Trying to get info about a player, that is nonexistent:" + player);
-            return 0;
+            return;
         }
 
         playerScores[player] += increment;
     }
 
     public int[] GetScores() {
-        int[] returning;
-        return Array.Copy(playerScores, returning, playerScores.Length);
+        int[] returning = new int[playerScores.Length];
+        Array.Copy(playerScores, returning, playerScores.Length);
         return returning;
     }
 }
