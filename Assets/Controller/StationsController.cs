@@ -48,7 +48,7 @@ public class StationsController : MonoBehaviour {
             SpriteRenderer sr = (SpriteRenderer)stationGO.GetComponent<SpriteRenderer>();
             sr.sortingLayerName = "Trains";
             stations[i] = stationGO;
-            //SetStationColor(i, PlayerColor.None);
+            SetStationColor(i, PlayerColor.None);
         }
         //W
         start = 9; 
@@ -60,7 +60,7 @@ public class StationsController : MonoBehaviour {
             SpriteRenderer sr = (SpriteRenderer)stationGO.GetComponent<SpriteRenderer>();
             sr.sortingLayerName = "Trains";
             stations[i] = stationGO;
-            //SetStationColor(i, PlayerColor.None);
+            SetStationColor(i, PlayerColor.None);
         }
         //S
         start = 17;
@@ -78,7 +78,7 @@ public class StationsController : MonoBehaviour {
             SpriteRenderer sr = (SpriteRenderer)stationGO.GetComponent<SpriteRenderer>();
             sr.sortingLayerName = "Trains";
             stations[i] = stationGO;
-            //SetStationColor(i, PlayerColor.None);
+            SetStationColor(i, PlayerColor.None);
         }
         //E
         start = 25;
@@ -90,7 +90,7 @@ public class StationsController : MonoBehaviour {
             SpriteRenderer sr = (SpriteRenderer)stationGO.GetComponent<SpriteRenderer>();
             sr.sortingLayerName = "Trains";
             stations[i] = stationGO;
-            //SetStationColor(i, PlayerColor.None);
+            SetStationColor(i, PlayerColor.None);
         }
     }
 	

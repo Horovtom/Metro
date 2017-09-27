@@ -87,4 +87,12 @@ public class Game {
     void SetUpStations() {
         //TODO: IMPLEMENT
     }
+
+    public PlayerColor GetPlayerAtStation(int stationNumber) {
+        throw new NotImplementedException();
+    }
+
+    public int[] GetPlayersScores() {
+        throw new NotImplementedException();
+    }
 }
