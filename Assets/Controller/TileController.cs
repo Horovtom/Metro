@@ -22,15 +22,17 @@ public class TileController : MonoBehaviour {
     void Start() {
         tileGOMap = new Dictionary<Tile, GameObject>();
         GOTileMap = new Dictionary<GameObject,Tile>();
-        Game game = GameController.Instance.Game;
-        LoadSprites();
-        boardGO = new GameObject[game.Width, game.Height];
+        //Game game = GameController.Instance.Game;
+        boardGO = new GameObject[8, 8];
         boardCoordsMap = new Dictionary<GameObject, Vector2>();
+        tileSprites = new Dictionary<string, Sprite>();
+        LoadSprites();
 
-        for (int x = 0; x < game.Width; x++) {
-            for (int y = 0; y < game.Height; y++) {
-                if (!game.IsFieldWithTile(x, y))
-                    continue;
+
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+//                if (!game.IsFieldWithTile(x, y))
+//                    continue;
 
                 GameObject tileGO = (GameObject)GameObject.Instantiate(tilePrefab, this.transform.position + (new Vector3(x, y, 0)), Quaternion.identity);
                 tileGO.name = "Tile [" + x + ", " + y + "]";
@@ -99,7 +101,7 @@ public class TileController : MonoBehaviour {
     //        tileGO.GetComponent<SpriteRenderer>().sprite = s;
     //    }
 
-    void DisplayTile(int x, int y, int Type) {
+    public void DisplayTile(int x, int y, int Type) {
         string spriteName = "tiles" + Type;
         if (!tileSprites.ContainsKey(spriteName)) {
             Debug.LogError("Sprite: " + spriteName + " not present in dictionary! Sprite missing!");

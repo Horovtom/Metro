@@ -27,7 +27,8 @@ public enum PlayerColor {
     /// <summary>
     /// Cyan
     /// </summary>
-    C = 5
+    C = 5,
+    None = -1
 }
 
 public class Game {
@@ -53,6 +54,8 @@ public class Game {
         LoadScheduleConfig(scheduleConfig);
 
         SetUpStations();
+
+
 
         //TODO: COMPLETE GAME PREPARATION
     }

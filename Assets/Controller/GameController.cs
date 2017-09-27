@@ -24,7 +24,23 @@ public class GameController : MonoBehaviour {
 	
     // Update is called once per frame
     void Update() {
-        
+        SpawnTiles();
+    }
+
+    bool spawned = false;
+
+    /// <summary>
+    /// Just for testing!
+    /// </summary>
+    void SpawnTiles() {
+        if (!spawned) {
+            spawned = true;
+            TileController.Instance.DisplayTile(0, 0, 3);
+            TileController.Instance.DisplayTile(7, 7, 3);
+            TileController.Instance.DisplayTile(7, 0, 3);
+            TileController.Instance.DisplayTile(0, 7, 3);
+
+        }
     }
 
     void SetDefaultScheduleConfig() {
