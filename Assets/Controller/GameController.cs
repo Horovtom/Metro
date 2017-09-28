@@ -6,6 +6,8 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
     public static GameController Instance { get; private set; }
 
+    public int numOfPlayers;
+
     public Game Game { get; private set; }
 
     public GameController() {
@@ -19,12 +21,12 @@ public class GameController : MonoBehaviour {
         if (!PlayerPrefs.HasKey("ScheduleConfig") || PlayerPrefs.GetString("ScheduleConfig").Length == 0) {
             SetDefaultScheduleConfig();
         }
-        Game = new Game(PlayerPrefs.GetString("TilesConfig"), PlayerPrefs.GetString("ScheduleConfig"));
+        Game = new Game(PlayerPrefs.GetString("TilesConfig"), PlayerPrefs.GetString("ScheduleConfig"), numOfPlayers);
     }
 	
     // Update is called once per frame
     void Update() {
-        SpawnTiles();
+        //SpawnTiles();
     }
 
     bool spawned = false;
@@ -63,9 +65,9 @@ public class GameController : MonoBehaviour {
             "5 G 2 9 13 21 26 30" + Environment.NewLine +
             "6 G 6 15 20 24 31" + Environment.NewLine +
             "5 R 4 8 11 20 24 31" + Environment.NewLine +
-            "6 R 3 9 13 2 30" + Environment.NewLine +
-            "6 C 6 7 12 22 28 32";
-
+            "6 R 3 9 13 23 30" + Environment.NewLine +
+            "6 C 7 12 22 28 32";
+       
         PlayerPrefs.SetString("ScheduleConfig", defaultConfig);
     }
 

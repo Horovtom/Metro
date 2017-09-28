@@ -40,11 +40,15 @@ public class Game {
     private Tile[,] board;
     private ScheduleRepository scheduleRepository;
 
+    private Players players;
+
+    public int NumOfPlayers { get; }
+
     private TilesStack stack;
 
     public Tile TileInHand { get; protected set; }
 
-    public Game(string tilesConfig, string scheduleConfig) {
+    public Game(string tilesConfig, string scheduleConfig, int numOfPlayers) {
         Width = 8;
         Height = 8;
 
@@ -52,9 +56,9 @@ public class Game {
         TileRepository tileRepository = new TileRepository(tilesConfig);
         stack = new TilesStack(tileRepository);
         LoadScheduleConfig(scheduleConfig);
+        this.NumOfPlayers = numOfPlayers;
 
-        SetUpStations();
-
+        this.players = new Players(numOfPlayers);
 
 
         //TODO: COMPLETE GAME PREPARATION
@@ -85,7 +89,12 @@ public class Game {
     }
 
     void SetUpStations() {
-        //TODO: IMPLEMENT
+        for (int i = 0; i < NumOfPlayers; i++) {
+            Schedule s = scheduleRepository.GetSchedule((PlayerColor)i, NumOfPlayers);
+            foreach (int st in s.GetStations()) {
+                StationsController.Instance.SetStationColor(st, (PlayerColor)i);
+            }
+        }
     }
 
     public PlayerColor GetPlayerAtStation(int stationNumber) {
@@ -94,5 +103,9 @@ public class Game {
 
     public int[] GetPlayersScores() {
         throw new NotImplementedException();
+    }
+
+    public void DisplayStations() {
+        SetUpStations();
     }
 }

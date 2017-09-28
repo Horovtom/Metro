@@ -6,9 +6,15 @@ public class StationsController : MonoBehaviour {
     public GameObject stationPrefab;
     Dictionary<int, GameObject> stations;
 
+    public static StationsController Instance { get; private set; }
+
+    public StationsController() {
+        stations = new Dictionary<int, GameObject>();
+        Instance = this;
+    }
+
     // Use this for initialization
     void Start() {
-        stations = new Dictionary<int, GameObject>();
         Game game = GameController.Instance.Game;
         GameObject[] stationsContainers = GameObject.FindGameObjectsWithTag("Stations");
         GameObject NStationsContainer = null, EStationsContainer = null, WStationsContainer = null, SStationsContainer = null;
@@ -54,7 +60,7 @@ public class StationsController : MonoBehaviour {
         start = 9; 
         stop = 16;
         for (int i = start; i <= stop; i++) {
-            GameObject stationGO = (GameObject)GameObject.Instantiate(stationPrefab, WStationsContainer.transform.position + (new Vector3(0, (i - start), 0)), Quaternion.identity);
+            GameObject stationGO = (GameObject)GameObject.Instantiate(stationPrefab, WStationsContainer.transform.position + (new Vector3(0, -(i - start), 0)), Quaternion.identity);
             stationGO.name = "Station [" + i + "]";
             stationGO.transform.SetParent(WStationsContainer.transform);
             SpriteRenderer sr = (SpriteRenderer)stationGO.GetComponent<SpriteRenderer>();
@@ -84,7 +90,7 @@ public class StationsController : MonoBehaviour {
         start = 25;
         stop = 32;
         for (int i = start; i <= stop; i++) {
-            GameObject stationGO = (GameObject)GameObject.Instantiate(stationPrefab, EStationsContainer.transform.position + (new Vector3(0, -(i - start), 0)), Quaternion.identity);
+            GameObject stationGO = (GameObject)GameObject.Instantiate(stationPrefab, EStationsContainer.transform.position + (new Vector3(0, (i - start), 0)), Quaternion.identity);
             stationGO.transform.SetParent(EStationsContainer.transform);
             stationGO.name = "Station [" + i + "]";
             SpriteRenderer sr = (SpriteRenderer)stationGO.GetComponent<SpriteRenderer>();
@@ -92,6 +98,8 @@ public class StationsController : MonoBehaviour {
             stations[i] = stationGO;
             SetStationColor(i, PlayerColor.None);
         }
+
+        game.DisplayStations();
     }
 	
     // Update is called once per frame
@@ -100,10 +108,12 @@ public class StationsController : MonoBehaviour {
     }
 
     public void SetStationColor(int station, PlayerColor color) {
-        if (station < 0 || station >= stations.Count) {
-            Debug.Log("Trying to set station " + station + " color to " + color + ", but this station number does not exist! ");
+        if (!stations.ContainsKey(station)) {
+            Debug.Log("Trying to set station " + station + " color to " + color + ", but this station number does not exist! Stations length is: " + stations.Count);
             return;
         }
+
+        Debug.Log("Setting station: " + station + " to color: " + color);
 
         stations[station].SetActive(true);
 
@@ -118,7 +128,7 @@ public class StationsController : MonoBehaviour {
                 stations[station].GetComponent<SpriteRenderer>().color = Color.green;
                 break;
             case PlayerColor.O:
-                stations[station].GetComponent<SpriteRenderer>().color = new Color(255, 127, 80, 1);
+                stations[station].GetComponent<SpriteRenderer>().color = new Color(255 / 255f, 127 / 255f, 80 / 255f, 1);
                 break;
             case PlayerColor.R:
                 stations[station].GetComponent<SpriteRenderer>().color = Color.red;

@@ -21,6 +21,15 @@ public class Players {
         }
     }
 
+    public void AddPlayer(Player player) {
+        for (int i = 0; i < players.Length; i++) {
+            if (players[i] == null) {
+                players[i] = player;
+                return;
+            }
+        }
+    }
+
     /// <summary>
     /// Asks current player to move to Return his move. 
     /// This then increments player to move to next player.
