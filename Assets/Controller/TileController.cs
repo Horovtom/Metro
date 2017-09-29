@@ -16,18 +16,17 @@ public class TileController : MonoBehaviour {
 
     public TileController() {
         Instance = this;
+        tileSprites = new Dictionary<string, Sprite>();
+        tileGOMap = new Dictionary<Tile, GameObject>();
+        GOTileMap = new Dictionary<GameObject,Tile>();
+        boardCoordsMap = new Dictionary<GameObject, Vector2>();
+        boardGO = new GameObject[8, 8];
+
     }
     
     // Use this for initialization
     void Start() {
-        tileGOMap = new Dictionary<Tile, GameObject>();
-        GOTileMap = new Dictionary<GameObject,Tile>();
-        //Game game = GameController.Instance.Game;
-        boardGO = new GameObject[8, 8];
-        boardCoordsMap = new Dictionary<GameObject, Vector2>();
-        tileSprites = new Dictionary<string, Sprite>();
         LoadSprites();
-
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
@@ -62,6 +61,27 @@ public class TileController : MonoBehaviour {
 //                tile.RegisterTypeChangedCallback(TileSpriteChanged);
 //            }
 //        }
+    }
+
+    public void DisplayTileInHand(int type, PlayerColor color) {
+        GameObject tileInHandDisplay = (GameObject)GameObject.Find("TileInHandDisplay");
+
+        Debug.Log("I am here " + tileInHandDisplay);
+
+        if (!tileInHandDisplay)
+            return;
+        tileInHandDisplay.SetActive(true);
+        if (tileInHandDisplay.GetComponent<SpriteRenderer>() == null) {
+            Debug.Log("TileInHandDisplay SpriteRenderer was not found");
+            return;
+        }
+        if (tileSprites == null) {
+            Debug.Log("tileSprites was not found");
+            return;
+        }
+        tileInHandDisplay.GetComponent<SpriteRenderer>().sprite = tileSprites["tiles" + type];
+        GameObject playerOnTurnDisplay = (GameObject)GameObject.Find("PlayerOnTurnDisplay");
+        playerOnTurnDisplay.GetComponent<SpriteRenderer>().color = StationsController.GetPlayerColor(color);
     }
 
     void LoadSprites() {

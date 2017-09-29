@@ -14,7 +14,7 @@ public class Players {
         playerScores = new int[playerCount];
     }
 
-    private void IncrementPlayer() {
+    public void IncrementPlayer() {
         currentPlayerToMove++;
         if (currentPlayerToMove >= players.Length) {
             currentPlayerToMove = 0;
@@ -32,11 +32,9 @@ public class Players {
 
     /// <summary>
     /// Asks current player to move to Return his move. 
-    /// This then increments player to move to next player.
     /// </summary>
     public Vector2 Move(BoardState bs, int tile) {
         int toMove = currentPlayerToMove;
-        IncrementPlayer();
         return players[toMove].Move(bs, tile);
     }
 
@@ -46,6 +44,13 @@ public class Players {
             return 0;
         }
         return playerScores[player];
+    }
+
+    public void InputClicked(Vector2 pos) {
+
+        if (players[currentPlayerToMove].IsInteractive()) {
+            players[currentPlayerToMove].InputClicked(pos);
+        }
     }
 
     public void IncrementScore(int player, int increment) {
@@ -61,5 +66,9 @@ public class Players {
         int[] returning = new int[playerScores.Length];
         Array.Copy(playerScores, returning, playerScores.Length);
         return returning;
+    }
+
+    public Player GetPlayerOnMove() {
+        return players[currentPlayerToMove];
     }
 }

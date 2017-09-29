@@ -24,6 +24,7 @@ public class TilesStack {
     }
 
     public Tile Pop() {
+        ShuffleStack();
         return stack.Pop();
     }
 

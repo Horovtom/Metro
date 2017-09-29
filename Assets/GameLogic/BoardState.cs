@@ -10,8 +10,21 @@ public class BoardState {
         this.game = game;
     }
 
+    /// <summary>
+    /// Returns -1 if the tile is not yet placed
+    /// </summary>
     public int GetTileTypeAt(int x, int y) {
-        return game.GetTileAt(x, y).Type;
+        Tile t = game.GetTileAt(x, y);
+        if (t == null) {
+            return -1;
+        }
+        else {
+            return t.Type;
+        }
+    }
+
+    public bool IsTilePlaced(int x, int y) {
+        return GetTileTypeAt(x, y) != -1;
     }
 
     public PlayerColor GetPlayerAtStation(int stationNumber) {

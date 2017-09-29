@@ -36,6 +36,8 @@ public class Game {
 
     public int Height { get; }
 
+    private bool changedTile = false;
+
     //Move this to Stack
     private Tile[,] board;
     private ScheduleRepository scheduleRepository;
@@ -48,25 +50,37 @@ public class Game {
 
     public Tile TileInHand { get; protected set; }
 
+    public void Start() {
+         
+
+        this.players = new Players(NumOfPlayers);
+
+        TileInHand = stack.Pop();
+
+        players.AddPlayer(new HumanPlayer("PrvniHrac", PlayerColor.Y));
+        players.AddPlayer(new HumanPlayer("DruhyHrac", PlayerColor.B));
+        players.AddPlayer(new HumanPlayer("TretiHrac", PlayerColor.G));
+        players.AddPlayer(new HumanPlayer("CtvrtyHrac", PlayerColor.C));
+        players.AddPlayer(new HumanPlayer("PatyHrac", PlayerColor.O));
+        players.AddPlayer(new HumanPlayer("SestyHrac", PlayerColor.R));
+
+        TileController.Instance.DisplayTileInHand(TileInHand.Type, players.GetPlayerOnMove().Color);
+    }
+
     public Game(string tilesConfig, string scheduleConfig, int numOfPlayers) {
         Width = 8;
         Height = 8;
+        this.NumOfPlayers = numOfPlayers;
 
         board = new Tile[Width, Height];
         TileRepository tileRepository = new TileRepository(tilesConfig);
         stack = new TilesStack(tileRepository);
         LoadScheduleConfig(scheduleConfig);
-        this.NumOfPlayers = numOfPlayers;
-
-        this.players = new Players(numOfPlayers);
-
-
-        //TODO: COMPLETE GAME PREPARATION
     }
 
     public Tile GetTileAt(int x, int y) {
         if (!IsFieldWithTile(x, y)) {
-            Debug.LogError("GetTileAt - out of bounds: " + x + ", " + y);
+            //Debug.Log("GetTileAt - out of bounds: " + x + ", " + y);
             return null;
         }
         return board[x, y];
@@ -84,8 +98,7 @@ public class Game {
     }
 
     public void ClickedOnTile(Vector2 pos) {
-        
-        Debug.Log("Tile had coords: " + pos.x + " " + pos.y);
+        players.InputClicked(pos);
     }
 
     void SetUpStations() {
@@ -107,5 +120,54 @@ public class Game {
 
     public void DisplayStations() {
         SetUpStations();
+    }
+
+    bool IsValidMove(Vector2 move, int type) {
+        if (board[(int)move.x, (int)move.y] != null) {
+            return false;
+        }
+
+        //TODO: Corners!
+
+        return true;
+    }
+
+    void DoMove(Vector2 move, Tile tileInHand) {
+        Debug.Log("Putting " + tileInHand.Type + " on " + move.x + " " + move.y);
+        board[(int)move.x, (int)move.y] = tileInHand;
+        TileController.Instance.DisplayTile((int)move.x, (int)move.y, tileInHand.Type);
+    }
+
+    public void Update() {
+        Vector2 move = players.Move(new BoardState(this), TileInHand.Type);
+        if (move.Equals(new Vector2(-2, -2))) {
+            //He needs more time! 
+            return;
+        }
+        else if (move.Equals(new Vector2(-1, -1))) {
+            //He wants another tile!
+            if (changedTile) {
+                Debug.Log("Player: " + players.GetPlayerOnMove().Name + " is trying to change tile he got, but changed already! Invalid!!");
+            }
+            else {
+                changedTile = true;
+                stack.ReturnToStack(TileInHand);
+                TileInHand = stack.Pop();
+            }
+        }
+        else if (IsValidMove(move, TileInHand.Type)) {
+            //It is valid
+            changedTile = false;
+            DoMove(move, TileInHand);
+            TileInHand = stack.Pop();
+            players.IncrementPlayer();
+            Debug.Log("Player to move: " + players.GetPlayerOnMove().Name + " to put tile " + TileInHand.Type);
+        }
+        else {
+            Debug.Log("Player: " + players.GetPlayerOnMove().Name + " is trying to do an invalid move! " + move + " with tile: " + TileInHand.Type);
+        }
+
+        TileController.Instance.DisplayTileInHand(TileInHand.Type, players.GetPlayerOnMove().Color);
+
     }
 }

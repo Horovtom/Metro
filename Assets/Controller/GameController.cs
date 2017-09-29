@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour {
 
     public Game Game { get; private set; }
 
+    private bool gameStarted = false;
+
     public GameController() {
         Instance = this;
     }
@@ -26,7 +28,11 @@ public class GameController : MonoBehaviour {
 	
     // Update is called once per frame
     void Update() {
-        //SpawnTiles();
+        if (!gameStarted) {
+            Game.Start();
+            gameStarted = true;
+        }
+        Game.Update();
     }
 
     bool spawned = false;
@@ -43,6 +49,14 @@ public class GameController : MonoBehaviour {
             TileController.Instance.DisplayTile(0, 7, 3);
 
         }
+    }
+
+    public void ClickedOnTile(Vector2 v) {
+        Game.ClickedOnTile(v);
+    }
+
+    public void HoverOnTile(Vector2 v) {
+        throw new NotImplementedException();
     }
 
     void SetDefaultScheduleConfig() {

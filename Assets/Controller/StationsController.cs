@@ -117,29 +117,37 @@ public class StationsController : MonoBehaviour {
 
         stations[station].SetActive(true);
 
+        if (color == PlayerColor.None) {
+            stations[station].SetActive(false);
+        }
+        stations[station].GetComponent<SpriteRenderer>().color = GetPlayerColor(color);
+
+
+    }
+
+    public static Color GetPlayerColor(PlayerColor color) {
         switch (color) {
             case PlayerColor.B:
-                stations[station].GetComponent<SpriteRenderer>().color = Color.blue;
+                return Color.blue;
                 break;
             case PlayerColor.C:
-                stations[station].GetComponent<SpriteRenderer>().color = Color.cyan;
+                return Color.cyan;
                 break;
             case PlayerColor.G:
-                stations[station].GetComponent<SpriteRenderer>().color = Color.green;
+                return Color.green;
                 break;
             case PlayerColor.O:
-                stations[station].GetComponent<SpriteRenderer>().color = new Color(255 / 255f, 127 / 255f, 80 / 255f, 1);
+                return new Color(255 / 255f, 127 / 255f, 80 / 255f, 1);
                 break;
             case PlayerColor.R:
-                stations[station].GetComponent<SpriteRenderer>().color = Color.red;
+                return Color.red;
                 break;
             case PlayerColor.Y:
-                stations[station].GetComponent<SpriteRenderer>().color = Color.yellow;
+                return Color.yellow;
                 break;
             default:
-                stations[station].SetActive(false);
+                return Color.clear;
                 break;
         }
-
     }
 }
