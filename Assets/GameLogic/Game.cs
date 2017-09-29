@@ -25,9 +25,9 @@ public enum PlayerColor {
     /// </summary>
     R = 4,
     /// <summary>
-    /// Cyan
+    /// Violet
     /// </summary>
-    C = 5,
+    V = 5,
     None = -1
 }
 
@@ -50,6 +50,8 @@ public class Game {
 
     public Tile TileInHand { get; protected set; }
 
+    public Station[] Stations { get; }
+
     public void Start() {
          
 
@@ -60,7 +62,7 @@ public class Game {
         players.AddPlayer(new HumanPlayer("PrvniHrac", PlayerColor.Y));
         players.AddPlayer(new HumanPlayer("DruhyHrac", PlayerColor.B));
         players.AddPlayer(new HumanPlayer("TretiHrac", PlayerColor.G));
-        players.AddPlayer(new HumanPlayer("CtvrtyHrac", PlayerColor.C));
+        players.AddPlayer(new HumanPlayer("CtvrtyHrac", PlayerColor.V));
         players.AddPlayer(new HumanPlayer("PatyHrac", PlayerColor.O));
         players.AddPlayer(new HumanPlayer("SestyHrac", PlayerColor.R));
 
@@ -71,6 +73,7 @@ public class Game {
         Width = 8;
         Height = 8;
         this.NumOfPlayers = numOfPlayers;
+        this.Stations = new Station[32];
 
         board = new Tile[Width, Height];
         TileRepository tileRepository = new TileRepository(tilesConfig);
@@ -105,7 +108,7 @@ public class Game {
         for (int i = 0; i < NumOfPlayers; i++) {
             Schedule s = scheduleRepository.GetSchedule((PlayerColor)i, NumOfPlayers);
             foreach (int st in s.GetStations()) {
-                StationsController.Instance.SetStationColor(st, (PlayerColor)i);
+                Station station = new Station(st, (PlayerColor)i);
             }
         }
     }
@@ -115,7 +118,7 @@ public class Game {
     }
 
     public int[] GetPlayersScores() {
-        throw new NotImplementedException();
+        return players.GetScores();
     }
 
     public void DisplayStations() {
@@ -138,36 +141,40 @@ public class Game {
         TileController.Instance.DisplayTile((int)move.x, (int)move.y, tileInHand.Type);
     }
 
+    public PlayerColor PlayerOnTurn() {
+        return players.GetPlayerOnMove().Color;
+    }
+
     public void Update() {
         Vector2 move = players.Move(new BoardState(this), TileInHand.Type);
         if (move.Equals(new Vector2(-2, -2))) {
             //He needs more time! 
             return;
-        }
-        else if (move.Equals(new Vector2(-1, -1))) {
+        } else if (move.Equals(new Vector2(-1, -1))) {
             //He wants another tile!
             if (changedTile) {
                 Debug.Log("Player: " + players.GetPlayerOnMove().Name + " is trying to change tile he got, but changed already! Invalid!!");
-            }
-            else {
+            } else {
                 changedTile = true;
                 stack.ReturnToStack(TileInHand);
                 TileInHand = stack.Pop();
             }
-        }
-        else if (IsValidMove(move, TileInHand.Type)) {
+        } else if (IsValidMove(move, TileInHand.Type)) {
             //It is valid
             changedTile = false;
             DoMove(move, TileInHand);
             TileInHand = stack.Pop();
             players.IncrementPlayer();
             Debug.Log("Player to move: " + players.GetPlayerOnMove().Name + " to put tile " + TileInHand.Type);
-        }
-        else {
+        } else {
             Debug.Log("Player: " + players.GetPlayerOnMove().Name + " is trying to do an invalid move! " + move + " with tile: " + TileInHand.Type);
         }
 
         TileController.Instance.DisplayTileInHand(TileInHand.Type, players.GetPlayerOnMove().Color);
 
+    }
+
+    public PlayerColor[] GetPlayerOrder() {
+        return players.GetPlayerOrder();
     }
 }

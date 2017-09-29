@@ -18,8 +18,7 @@ public class InputController : MonoBehaviour {
             if (hit != null && hit.collider != null) {
                 Debug.Log("Clicked on: " + hit.collider.name);
                 GameController.Instance.ClickedOnTile(TileController.Instance.GetCoordsOfTile(hit.collider.gameObject));
-            }
-            else {
+            } else {
                 Debug.Log("Click");
             }
         }

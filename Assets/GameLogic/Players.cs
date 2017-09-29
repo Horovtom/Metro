@@ -71,4 +71,13 @@ public class Players {
     public Player GetPlayerOnMove() {
         return players[currentPlayerToMove];
     }
+
+    public PlayerColor[] GetPlayerOrder() {
+        PlayerColor[] returning = new PlayerColor[players.Length];
+
+        for (int i = 0; i < players.Length; i++) {
+            returning[i] = players[i].Color;
+        }
+        return returning;
+    }
 }

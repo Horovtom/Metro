@@ -30,8 +30,8 @@ public class TileController : MonoBehaviour {
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-//                if (!game.IsFieldWithTile(x, y))
-//                    continue;
+                if (!GameController.Instance.IsFieldWithTile(x, y))
+                    continue;
 
                 GameObject tileGO = (GameObject)GameObject.Instantiate(tilePrefab, this.transform.position + (new Vector3(x, y, 0)), Quaternion.identity);
                 tileGO.name = "Tile [" + x + ", " + y + "]";
@@ -65,8 +65,6 @@ public class TileController : MonoBehaviour {
 
     public void DisplayTileInHand(int type, PlayerColor color) {
         GameObject tileInHandDisplay = (GameObject)GameObject.Find("TileInHandDisplay");
-
-        Debug.Log("I am here " + tileInHandDisplay);
 
         if (!tileInHandDisplay)
             return;

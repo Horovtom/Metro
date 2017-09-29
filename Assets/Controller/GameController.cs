@@ -10,13 +10,15 @@ public class GameController : MonoBehaviour {
 
     public Game Game { get; private set; }
 
-    private bool gameStarted = false;
+    public bool GameStarted { get; private set; }
 
     public GameController() {
         Instance = this;
+        GameStarted = false;
     }
 
     void Start() {
+
         if (!PlayerPrefs.HasKey("TilesConfig") || PlayerPrefs.GetString("TilesConfig").Length == 0) {
             SetDefaultTilesConfig();
         }
@@ -28,9 +30,9 @@ public class GameController : MonoBehaviour {
 	
     // Update is called once per frame
     void Update() {
-        if (!gameStarted) {
+        if (!GameStarted) {
             Game.Start();
-            gameStarted = true;
+            GameStarted = true;
         }
         Game.Update();
     }
@@ -80,7 +82,7 @@ public class GameController : MonoBehaviour {
             "6 G 6 15 20 24 31" + Environment.NewLine +
             "5 R 4 8 11 20 24 31" + Environment.NewLine +
             "6 R 3 9 13 23 30" + Environment.NewLine +
-            "6 C 7 12 22 28 32";
+            "6 V 7 12 22 28 32";
        
         PlayerPrefs.SetString("ScheduleConfig", defaultConfig);
     }
@@ -118,5 +120,10 @@ public class GameController : MonoBehaviour {
             "2 W N N E E S S W" + Environment.NewLine;
 
         PlayerPrefs.SetString("TilesConfig", defaultConfig);
+    }
+
+    public bool IsFieldWithTile(int x, int y) {
+        //TODO: Make modifyable
+        return x >= 0 && x < 8 && y >= 0 && y < 8 && ((x != 3 && x != 4) || (y != 3 && y != 4));
     }
 }

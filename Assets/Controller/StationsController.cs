@@ -130,8 +130,8 @@ public class StationsController : MonoBehaviour {
             case PlayerColor.B:
                 return Color.blue;
                 break;
-            case PlayerColor.C:
-                return Color.cyan;
+            case PlayerColor.V:
+                return new Color(148 / 255f, 0 / 255f, 211 / 255f, 1);
                 break;
             case PlayerColor.G:
                 return Color.green;
